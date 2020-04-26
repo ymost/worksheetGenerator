@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Output
+*.pdf
+
+# PyCharm
+.idea/
