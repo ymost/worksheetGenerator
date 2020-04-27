@@ -6,6 +6,7 @@ import pdfkit
 from exercise_template import ExerciseTemplate
 
 EXERCISE_PLACEHOLDER = '#####'
+SEED_PLACEHOLDER = '-----SEED-----'
 
 
 class WorksheetSpec:
@@ -20,9 +21,12 @@ class WorksheetSpec:
     def generate_exercise(self) -> str:
         return choices(self.templates, self.weights)[0].generate_exercise()
 
-    def generate_worksheet(self) -> None:
+    def generate_worksheet(self, current_seed: int) -> None:
         with open('worksheet_template.html', 'r') as template:
-            worksheet = ''.join(line.replace(EXERCISE_PLACEHOLDER, self.generate_exercise()) for line in template)
+            worksheet = ''.join(
+                line.replace(EXERCISE_PLACEHOLDER, self.generate_exercise()).replace(SEED_PLACEHOLDER, str(current_seed))
+                for line in template
+            )
         pdfkit.from_string(
             worksheet, f'worksheet_{self.name}.pdf',
             options={
