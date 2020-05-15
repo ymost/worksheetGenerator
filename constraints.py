@@ -38,6 +38,19 @@ class InRange(BaseConstraint):
         return randint(self.range_start, self.range_end)
 
 
+class MultipleOf(BaseConstraint):
+    def __init__(self, multiplier: int, other_constraint: BaseConstraint) -> None:
+        self.multiplier = multiplier
+        self.other_constraint: BaseConstraint = other_constraint
+
+    def test(self, num: int) -> bool:
+        quotient, remainder = divmod(num, self.multiplier)
+        return remainder == 0 and self.other_constraint.test(quotient)
+
+    def generate(self) -> int:
+        return self.multiplier * self.other_constraint.generate()
+
+
 class Even(BaseConstraint):
     def __init__(self, other_constraint: BaseConstraint) -> None:
         self.other_constraint: BaseConstraint = other_constraint
