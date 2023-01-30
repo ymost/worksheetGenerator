@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from random import randint
+from typing import Union
 
 MAX_ITER = 10000
 
@@ -39,7 +40,7 @@ class InRange(BaseConstraint):
 
 
 class MultipleOf(BaseConstraint):
-    def __init__(self, multiplier: int, other_constraint: BaseConstraint) -> None:
+    def __init__(self, multiplier: Union[int, float], other_constraint: BaseConstraint = NoConstraint()) -> None:
         self.multiplier = multiplier
         self.other_constraint: BaseConstraint = other_constraint
 

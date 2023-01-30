@@ -130,6 +130,7 @@ dmypy.json
 
 # Output
 *.pdf
+*.html
 
 # PyCharm
 .idea/
