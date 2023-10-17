@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from constraints import BaseConstraint, MAX_ITER
 from operation import Operation
 
@@ -14,7 +16,7 @@ class ExerciseTemplate:
         self.operand_2_constraint = operand_2_constraint
         self.result_constraint = result_constraint
 
-    def generate_exercise(self) -> str:
+    def generate_exercise_parts(self) -> Tuple[int, str, int]:
         for _ in range(MAX_ITER):
             operand_1: int = self.operand_1_constraint.generate()
             operand_2: int = self.operand_2_constraint.generate()
@@ -24,4 +26,4 @@ class ExerciseTemplate:
                 break
         else:
             raise ValueError('Generated results are not in required range')
-        return f'{operand_1} {self.operation.symbol} {operand_2} ='
+        return operand_1, self.operation.symbol, operand_2
