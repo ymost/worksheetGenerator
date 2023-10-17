@@ -33,14 +33,20 @@ class WorksheetSpec:
                 )
         elif exercise_format == 'vertical':
             with open('worksheet_template_vertical.html', 'r') as template:
-                worksheet = ''.join(
-                    line
-                    .replace(FIRST_NUMBER_PLACEHOLDER, str((parts := self.generate_exercise_parts())[0]))
-                    .replace(OPERATOR_PLACEHOLDER, parts[1])
-                    .replace(SECOND_NUMBER_PLACEHOLDER, str(parts[2]))
-                    .replace(SEED_PLACEHOLDER, str(current_seed))
-                    for line in template
-                )
+                new_lines = []
+                generate_new = True
+                for line in template:
+                    if generate_new:
+                        number_1, operator, number_2 = self.generate_exercise_parts()
+                    new_lines.append(
+                        line
+                        .replace(FIRST_NUMBER_PLACEHOLDER, str(number_1))
+                        .replace(OPERATOR_PLACEHOLDER, operator)
+                        .replace(SECOND_NUMBER_PLACEHOLDER, str(number_2))
+                        .replace(SEED_PLACEHOLDER, str(current_seed))
+                    )
+                    generate_new = SECOND_NUMBER_PLACEHOLDER in line
+                worksheet = ''.join(new_lines)
         else:
             raise ValueError("Unknown exercise format")
         if file_format == 'pdf':
