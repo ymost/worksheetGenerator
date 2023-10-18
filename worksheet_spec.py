@@ -38,6 +38,8 @@ class WorksheetSpec:
                 for line in template:
                     if generate_new:
                         number_1, operator, number_2 = self.generate_exercise_parts()
+                        padding = 1 + max(0, len(number_1) - len(number_2))
+                        number_2 = '&nbsp;' * padding + number_2
                     new_lines.append(
                         line
                         .replace(FIRST_NUMBER_PLACEHOLDER, number_1)
