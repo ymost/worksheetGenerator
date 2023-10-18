@@ -21,7 +21,7 @@ class WorksheetSpec:
         self.name = name
         self.weights, self.templates = zip(*template_portions)
 
-    def generate_exercise_parts(self) -> Tuple[int, str, int]:
+    def generate_exercise_parts(self) -> Tuple[str, str, str]:
         return choices(self.templates, self.weights)[0].generate_exercise_parts()
 
     def generate_worksheet(self, current_seed: int, exercise_format: str = 'horizontal', file_format: str = 'pdf') -> None:
@@ -40,9 +40,9 @@ class WorksheetSpec:
                         number_1, operator, number_2 = self.generate_exercise_parts()
                     new_lines.append(
                         line
-                        .replace(FIRST_NUMBER_PLACEHOLDER, str(number_1))
+                        .replace(FIRST_NUMBER_PLACEHOLDER, number_1)
                         .replace(OPERATOR_PLACEHOLDER, operator)
-                        .replace(SECOND_NUMBER_PLACEHOLDER, str(number_2))
+                        .replace(SECOND_NUMBER_PLACEHOLDER, number_2)
                         .replace(SEED_PLACEHOLDER, str(current_seed))
                     )
                     generate_new = SECOND_NUMBER_PLACEHOLDER in line

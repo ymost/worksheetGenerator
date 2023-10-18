@@ -16,14 +16,14 @@ class ExerciseTemplate:
         self.operand_2_constraint = operand_2_constraint
         self.result_constraint = result_constraint
 
-    def generate_exercise_parts(self) -> Tuple[int, str, int]:
+    def generate_exercise_parts(self) -> Tuple[str, str, str]:
         for _ in range(MAX_ITER):
-            operand_1: int = self.operand_1_constraint.generate()
-            operand_2: int = self.operand_2_constraint.generate()
-            result: int = self.operation.call(operand_1, operand_2)
+            number_1: int = self.operand_1_constraint.generate()
+            number_2: int = self.operand_2_constraint.generate()
+            result: int = self.operation.call(number_1, number_2)
             # Not the most efficient way, but good enough
             if self.result_constraint.test(result):
                 break
         else:
             raise ValueError('Generated results are not in required range')
-        return operand_1, self.operation.symbol, operand_2
+        return f'{number_1:,}', self.operation.symbol, f'{number_2:,}'
